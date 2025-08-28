@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loja de Cartinhas Pokémon</title>
+    <!-- Incluindo Tailwind CSS para um estilo mais moderno e responsivo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos personalizados */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to right, #ef4444 50%, #f9fafb 50%);
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        /* Estilo para o cabeçalho com novo gradiente */
+        header {
+            background: linear-gradient(to right, #ef4444, #f97316, #facc15);
+        }
+
+        /* Estilo da vitrine */
+        .card-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease-in-out;
+            border: 4px solid gold; /* Mantendo a borda dourada para um toque mais especial */
+        }
+        .card-container:hover {
+            transform: translateY(-10px) scale(1.03);
+        }
+        .card-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            cursor: pointer; /* Adicionado cursor pointer para indicar que é clicável */
+        }
+
+        /* Estilos do modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            position: relative;
+        }
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Estilos do modal de visualização de carta */
+        #cardViewModal .modal-content {
+            background: none;
+            box-shadow: none;
+        }
+        #cardViewModal img {
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: 12px;
+            border: 4px solid gold;
+        }
+
+    </style>
+</head>
+<body class="text-gray-900">
+
+    <header class="text-white shadow-lg p-6 text-center">
+        <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">Loja de Cartinhas Pokémon</h1>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+        <!-- Layout com 3 cartas por linha em telas maiores -->
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+
+            <!-- Card para Bulbasaur -->
+            <div class="card-container bg-white p-4 flex flex-col items-center gap-4">
+                <h2 class="text-xl font-bold">Bulbasaur</h2>
+                <img src="https://m.media-amazon.com/images/I/71n2EgxVyuL._UF894,1000_QL80_.jpg" alt="Carta de Bulbasaur" class="card-image">
+                <p class="font-bold text-xl">R$ 15,00</p>
+                <button class="buy-btn w-full bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition duration-300">Comprar</button>
+            </div>
+
+            <!-- Card para Squirtle -->
+            <div class="card-container bg-white p-4 flex flex-col items-center gap-4">
+                <h2 class="text-xl font-bold">Squirtle</h2>
+                <img src="https://m.media-amazon.com/images/I/71NzvKxz01L._UF894,1000_QL80_.jpg" alt="Carta de Squirtle" class="card-image">
+                <p class="font-bold text-xl">R$ 20,00</p>
+                <button class="buy-btn w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300">Comprar</button>
+            </div>
+
+            <!-- Card para Charmander -->
+            <div class="card-container bg-white p-4 flex flex-col items-center gap-4">
+                <h2 class="text-xl font-bold">Charmander</h2>
+                <img src="https://m.media-amazon.com/images/I/618mXBWntpL._UF894,1000_QL80_.jpg" alt="Carta de Charmander" class="card-image">
+                <p class="font-bold text-xl">R$ 25,00</p>
+                <button class="buy-btn w-full bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded transition duration-300">Comprar</button>
+            </div>
+
+            <!-- Card para Charizard -->
+            <div class="card-container bg-white p-4 flex flex-col items-center gap-4">
+                <h2 class="text-xl font-bold">Charizard</h2>
+                <img src="https://darkwolfcollectibles.com.au/wp-content/uploads/2024/01/Screenshot_36.jpg" alt="Carta de Charizard" class="card-image">
+                <p class="font-bold text-xl">R$ 150,00</p>
+                <button class="buy-btn w-full bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-4 rounded transition duration-300">Comprar</button>
+            </div>
+
+            <!-- Card para Pikachu -->
+            <div class="card-container bg-white p-4 flex flex-col items-center gap-4">
+                <h2 class="text-xl font-bold">Pikachu</h2>
+                <img src="https://www.mypokecard.com/en/Gallery/my/galery/8Au2uLuYOgeO.jpg" alt="Carta de Pikachu" class="card-image">
+                <p class="font-bold text-xl">R$ 50,00</p>
+                <button class="buy-btn w-full bg-yellow-400 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded transition duration-300">Comprar</button>
+            </div>
+
+            <!-- Card para Blastoise -->
+            <div class="card-container bg-white p-4 flex flex-col items-center gap-4">
+                <h2 class="text-xl font-bold">Blastoise</h2>
+                <img src="https://storage.googleapis.com/images.pricecharting.com/a8145f892ba27fcd2f99fcbf2723e4ae210ea7ff00d43a6df96d20afe7ac54a6/1600.jpg" alt="Carta de Blastoise" class="card-image">
+                <p class="font-bold text-xl">R$ 80,00</p>
+                <button class="buy-btn w-full bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded transition duration-300">Comprar</button>
+            </div>
+
+            <!-- Card para Mudkip -->
+            <div class="card-container bg-white p-4 flex flex-col items-center gap-4">
+                <h2 class="text-xl font-bold">Mudkip</h2>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBEXOIqTHto13hJz46_hHBfsFXxDKCH4M3eg&s" alt="Carta de Mudkip" class="card-image">
+                <p class="font-bold text-xl">R$ 10,00</p>
+                <button class="buy-btn w-full bg-blue-300 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded transition duration-300">Comprar</button>
+            </div>
+
+            <!-- Card para Bidoof -->
+            <div class="card-container bg-white p-4 flex flex-col items-center gap-4">
+                <h2 class="text-xl font-bold">Bidoof</h2>
+                <img src="https://img.mypcards.com/img/2/1704/pokemon_pgo_059_78/pokemon_pgo_059_78_pt.jpg" alt="Carta de Bidoof" class="card-image">
+                <p class="font-bold text-xl">R$ 5,00</p>
+                <button class="buy-btn w-full bg-stone-500 hover:bg-stone-700 text-white font-bold py-2 px-4 rounded transition duration-300">Comprar</button>
+            </div>
+
+            <!-- Card para Wobbuffet -->
+            <div class="card-container bg-white p-4 flex flex-col items-center gap-4">
+                <h2 class="text-xl font-bold">Wobbuffet</h2>
+                <img src="https://img.mypcards.com/img/2/2264/pokemon_dri_082_182/pokemon_dri_082_182_pt.jpg" alt="Carta de Wobbuffet" class="card-image">
+                <p class="font-bold text-xl">R$ 8,00</p>
+                <button class="buy-btn w-full bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition duration-300">Comprar</button>
+            </div>
+
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white p-6 text-center mt-8">
+        <h2 class="text-lg md:text-xl">Para comprar entre em contato: <a href="tel:+550040028922" class="text-yellow-400 hover:underline">(00) 4002-8922</a></h2>
+    </footer>
+    
+    <!-- Modal de Compra -->
+    <div id="buyModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h3 class="text-2xl font-bold mb-4">Opções de Compra</h3>
+            <p id="modal-buy-text" class="text-lg mb-4"></p>
+            <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition duration-300">Adicionar ao Carrinho</button>
+        </div>
+    </div>
+
+    <!-- Modal de Visualização da Carta -->
+    <div id="cardViewModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <img id="modal-card-img" src="" alt="Visualização da Carta">
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const buyButtons = document.querySelectorAll('.buy-btn');
+            const cardImages = document.querySelectorAll('.card-image');
+            const buyModal = document.getElementById('buyModal');
+            const cardViewModal = document.getElementById('cardViewModal');
+            const buyModalText = document.getElementById('modal-buy-text');
+            const modalCardImg = document.getElementById('modal-card-img');
+            const closeButtons = document.querySelectorAll('.modal-close');
+
+            // Previne o fechamento do modal ao clicar no conteúdo
+            document.querySelectorAll('.modal-content').forEach(content => {
+                content.addEventListener('click', (e) => e.stopPropagation());
+            });
+
+            // Adiciona evento de clique para os botões de compra
+            buyButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const cardContainer = button.closest('.card-container');
+                    const cardName = cardContainer.querySelector('h2').innerText;
+                    const cardPrice = cardContainer.querySelector('p').innerText;
+                    buyModalText.innerText = `Você selecionou a carta "${cardName}" por ${cardPrice}.`;
+                    buyModal.classList.add('active');
+                });
+            });
+
+            // Adiciona evento de clique para as imagens das cartas
+            cardImages.forEach(image => {
+                image.addEventListener('click', () => {
+                    modalCardImg.src = image.src;
+                    cardViewModal.classList.add('active');
+                });
+            });
+
+            // Adiciona evento de clique para fechar os modais
+            closeButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    buyModal.classList.remove('active');
+                    cardViewModal.classList.remove('active');
+                });
+            });
+
+            // Fecha os modais ao clicar fora deles
+            buyModal.addEventListener('click', () => {
+                buyModal.classList.remove('active');
+            });
+            cardViewModal.addEventListener('click', () => {
+                cardViewModal.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
